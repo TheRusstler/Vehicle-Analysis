@@ -9,14 +9,14 @@ class StatusBar extends Scene {
       new Rectangle(5, 5, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
-        saveAndExit();
+        scene = new Menu();
       }
     }, 14);
   }
 
   void paint() {
     noStroke();
-    fill(35, 6, 63);
+    fill(39, 38, 42);
     rect(0, 0, width, 40);
     
     menu.paint();
@@ -25,9 +25,10 @@ class StatusBar extends Scene {
     textSize(16);
     fill(255);
     
-    text(String.format("%s POINTS", game.points), width/4, 10);
-    text(String.format("CAPTAIN %s", game.player), width/2, 10);
-    text(game.health + "% HEALTH", width * 3/4, 10);
+    //text(String.format("%s POINTS", game.points), width/4, 10);
+    //text(String.format("CAPTAIN %s", game.player), width/2, 10);
+    //text(game.health + "% HEALTH", width * 3/4, 10);
+    text(String.format("PORT %s", port), width/2, 10);
   }
 
 
