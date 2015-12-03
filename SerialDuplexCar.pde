@@ -9,7 +9,7 @@ PApplet applet;
 Scene scene;
 Vehicle vehicle;
 
-boolean isUITest = true;
+boolean isUITest = false;
 
 PImage logo;
 String port = "/dev/tty.usbserial-AI02KH63";
