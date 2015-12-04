@@ -83,7 +83,7 @@ class Graph extends Scene { //<>// //<>//
 
       line(x1, y1, x2, y2);
 
-      println("\n\nx1: " + x1 + "\ny1: " + y1, "\nx2: " + x2 + "\ny2: " + y2);
+      //println("\n\nx1: " + x1 + "\ny1: " + y1, "\nx2: " + x2 + "\ny2: " + y2);
     }
   }
 

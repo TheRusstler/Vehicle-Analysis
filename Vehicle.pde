@@ -25,8 +25,10 @@ class Vehicle {
     int rpm = 0;
 
     channel.clear();
+    
+    delay(200);
     channel.write("010C\r\n");
-    delay(500);
+    delay(600);
 
     String raw, line = "";
 
