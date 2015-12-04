@@ -26,7 +26,7 @@ class Vehicle {
 
     channel.clear();
     channel.write("010C\r\n");
-    delay(1000);
+    delay(500);
 
     String raw, line = "";
 

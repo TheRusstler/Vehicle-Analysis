@@ -8,14 +8,14 @@ PApplet applet;
 Scene scene;
 Vehicle vehicle;
 
-boolean isUITest = true;
+boolean isUITest = false;
 
 PImage logo;
 String port = "/dev/tty.usbserial-AI02KH63";
 
 void setup() {
-  size(1000, 600);
-  //fullScreen();
+  //size(1000, 600);
+  fullScreen();
   applet = this;
 
   loadResources();
