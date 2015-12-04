@@ -13,9 +13,11 @@ class Vehicle {
   void reset() {
     channel.clear();
 
-    delay(200);
+    delay(2000);
     channel.write("ATZ\r\n");
-    delay(1000);
+    
+    // Wait for the board to reset before sending commands.
+    delay(2000);
     
     // Wait for idle prompt to appear.
     readLine();
@@ -37,7 +39,9 @@ class Vehicle {
     // If car not ready.
     if (line.contains("SEARCHING") || line.contains("STOPPED")) {
       println("Error: " + line);
+      
       // Maybe reset here?
+      
       return 0;
     }
 

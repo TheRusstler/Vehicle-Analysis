@@ -22,7 +22,21 @@ class VehicleDataSource extends Thread {
 
   void updateData() {
     if (!isUITest) {
-      data.add(vehicle.getRPM());
+
+      int result = 0;
+      switch(type) {
+        case(RPM):
+        result = vehicle.getRPM();
+        break;
+        case(SPEED):
+        result = vehicle.getRPM(); // TODO: Change to the appropriate requests
+        break;
+        case(OIL):
+        result = vehicle.getRPM();
+        break;
+      }
+
+      data.add(result);
       data.remove(0);
     } else {
       data.add((int)random(0, graph.maxValue));
