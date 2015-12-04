@@ -6,25 +6,6 @@ class Graphs extends Scene {
 
   public Graphs() {
     graph = new Graph();
-    
-    int buttonWidth = 200, buttonHeight = 60;
-    buttons.add(new Button("RESET", 
-      new Rectangle(100, height/2 -buttonHeight/2 -50, buttonWidth, buttonHeight), 
-      new Runnable() {
-      public void run() {
-        vehicle.reset();
-      }
-    }
-    ));
-
-    buttons.add(new Button("UPDATE", 
-      new Rectangle(100, height/2 -buttonHeight/2 +50, buttonWidth, buttonHeight), 
-      new Runnable() {
-      public void run() {
-        graph.value = vehicle.getRPM();
-      }
-    }
-    ));
   }
 
   void paint() {
