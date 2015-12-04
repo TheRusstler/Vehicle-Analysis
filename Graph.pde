@@ -11,20 +11,28 @@ class Graph extends Scene { //<>//
   float y_base = y + graph_height;       // Bottom of the graph
 
   // Data
-  ArrayList<Integer> dataPoints = new ArrayList<Integer>();
+  java.util.List dataPoints = Collections.synchronizedList(new ArrayList<Integer>());
+  VehicleDataSource dataSource;
 
+  int type;
   String title;
   float maxValue;
   int numberOfLabels;
   int labelSpacing;
   float y_scale_factor;
 
-  public Graph(String title, float maxValue, int numberOfLabels) {
+  public Graph(int type, String title, float maxValue, int numberOfLabels) {
+    this.type = type;
     this.title = title;
     this.maxValue = maxValue;
     this.numberOfLabels = numberOfLabels;
     this.labelSpacing = (int)maxValue / numberOfLabels;
     this.y_scale_factor = graph_height/maxValue;
+    
+    // Start reading data from the data source.
+    dataSource = new VehicleDataSource(dataPoints, type);
+    dataSource.start();
+    
     initialiseData();
   }
 
@@ -47,19 +55,8 @@ class Graph extends Scene { //<>//
     textAlign(CENTER, CENTER);
     text(title, width/2, height/2);
 
-    updateData();
     drawLabels();
     lineGraph(dataPoints);
-  }
-
-  void updateData() {
-    if (!isUITest) {
-      dataPoints.add(vehicle.getRPM());
-      dataPoints.remove(0);
-    } else if (frameCount % 30 == 0) {
-      dataPoints.add((int)random(0, maxValue));
-      dataPoints.remove(0);
-    }
   }
 
   void drawLabels() {
@@ -89,7 +86,7 @@ class Graph extends Scene { //<>//
     }
   }
 
-  void lineGraph(ArrayList<Integer> values ) {
+  void lineGraph(java.util.List values ) {
 
     strokeWeight(3);
     stroke(43, 130, 58);
@@ -99,10 +96,10 @@ class Graph extends Scene { //<>//
     for (int i=0; i<values.size()-1; i++) {
 
       x1 = x + i*(graph_width/(values.size()-1));
-      y1 = y_base - (values.get(i) * y_scale_factor);
+      y1 = y_base - ((int)values.get(i) * y_scale_factor);
 
       x2 = x + (i+1)*(graph_width/(values.size()-1));
-      y2 = y_base - (values.get(i+1) * y_scale_factor);
+      y2 = y_base - ((int)values.get(i+1) * y_scale_factor);
 
       line(x1, y1, x2, y2);
     }

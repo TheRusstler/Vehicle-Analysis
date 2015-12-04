@@ -9,6 +9,8 @@ Scene scene;
 Vehicle vehicle;
 Graph graph;
 
+final int RPM = 0, SPEED = 1, OIL = 2;
+
 boolean isUITest = true;
 
 PImage logo;
@@ -34,4 +36,23 @@ void mouseReleased() {
 
 void loadResources() {
   logo = loadImage("resources/logo/logo_large_transparent.png");
+}
+
+void loadGraph(int type) {
+  // Clean up old thread.
+  if (graph != null) {
+    graph.dataSource.interrupt();
+  }
+
+  switch(type) {
+    case(RPM):
+    graph = new Graph(RPM, "RPM", 1000, 5);
+    break;
+    case(SPEED):
+    graph = new Graph(SPEED, "SPEED", 5000, 5);
+    break;
+    case(OIL):
+    graph = new Graph(OIL, "OIL TEMP", 50, 10);
+    break;
+  }
 }
