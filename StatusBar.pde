@@ -26,7 +26,7 @@ class StatusBar extends Scene {
       new Rectangle(width/2 - buttonWidth/2 - buttonWidth - 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
-        graph = new Graph("SPEED", 4000);
+        graph = new Graph("SPEED", 5000, 5);
       }
     }
     , 14));
@@ -35,7 +35,7 @@ class StatusBar extends Scene {
       new Rectangle(width/2 - buttonWidth/2, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
-        graph = new Graph("RPM", 4000);
+        graph = new Graph("RPM", 1000, 5);
       }
     }
     , 14));
@@ -44,7 +44,7 @@ class StatusBar extends Scene {
       new Rectangle(width/2 - buttonWidth/2 + buttonWidth + 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
-        graph = new Graph("OIL TEMP", 4000);
+        graph = new Graph("OIL TEMP", 50, 10);
       }
     }
     , 14));

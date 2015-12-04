@@ -15,11 +15,15 @@ class Graph extends Scene { //<>//
 
   String title;
   float maxValue;
+  int numberOfLabels;
+  int labelSpacing;
   float y_scale_factor;
 
-  public Graph(String title, float maxValue) {
+  public Graph(String title, float maxValue, int numberOfLabels) {
     this.title = title;
     this.maxValue = maxValue;
+    this.numberOfLabels = numberOfLabels;
+    this.labelSpacing = (int)maxValue / numberOfLabels;
     this.y_scale_factor = graph_height/maxValue;
     initialiseData();
   }
@@ -72,7 +76,7 @@ class Graph extends Scene { //<>//
 
     // INTERMEDIATE
     textAlign(LEFT, CENTER);
-    for (int i=1000; i<maxValue; i+=1000) {
+    for (int i=labelSpacing; i<maxValue; i+=labelSpacing) {
       float y_pos = y_base - i * y_scale_factor;
 
       // Lines
