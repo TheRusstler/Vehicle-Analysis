@@ -108,7 +108,7 @@ class Vehicle { //<>//
   String readLine() {
     String line = "";
 
-    delay(300);
+    delay(350);
     while (channel.available() > 0) {
       char in = channel.readChar();
 

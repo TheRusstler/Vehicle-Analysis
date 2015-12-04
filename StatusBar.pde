@@ -13,6 +13,7 @@ class StatusBar extends Scene {
 
         // Detatch from vehicle
         if (!isUITest) {
+          disposeGraph();
           vehicle.dispose();
         }
 
