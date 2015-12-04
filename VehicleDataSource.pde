@@ -15,7 +15,7 @@ class VehicleDataSource extends Thread {
       updateData();
     }
   }
- 
+
   public void terminate() {
     running = false;
   }
@@ -33,6 +33,24 @@ class VehicleDataSource extends Thread {
         break;
         case(COOLANT):
         result = vehicle.getCoolant();
+        break;
+        case(INTAKE_AIR):
+        result = vehicle.getIntakeAirTemp();
+        break;
+        case(THROTTLE):
+        result = vehicle.getThrottlePosition();
+        break;
+        case(FUEL):
+        result = vehicle.getFuelLevel();
+        break;
+        case(AMBIENT_AIR):
+        result = vehicle.getAmbientAirTemp();
+        break;
+        case(ENGINE_LOAD):
+        result = vehicle.getEngineLoad();
+        break;
+        case(OIL_TEMP):
+        result = vehicle.getEngineOilTemp();
         break;
       }
 

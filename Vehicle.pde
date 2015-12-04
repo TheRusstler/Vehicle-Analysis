@@ -24,16 +24,43 @@ class Vehicle { //<>//
 
   int getRPM() {
     // Result is in quarters of rpm.
-    return getValue("010C\r\n", 4)/4;
+    return getValue("010C\r\n", 4)/4; // rpm
   }
 
   int getCoolant() {
     // Result is temp + 40.
-    return getValue("0105\r\n", 2) - 40;
+    return getValue("0105\r\n", 2) - 40; // °C
+  }
+
+  int getSpeed() {
+    return getValue("010D\r\n", 2); // km/h
+  }
+
+  int getIntakeAirTemp() {
+    // Result is temp + 40.
+    return getValue("010F\r\n", 2) - 40; // °C
+  }
+
+  int getThrottlePosition() {
+    return getValue("0111\r\n", 2) *100/255; // %
+  }
+
+  int getFuelLevel() {
+    return getValue("012F\r\n", 2) *100/255; // %
+  }
+
+  int getAmbientAirTemp() {
+    // Result is temp + 40.
+    return getValue("0146\r\n", 2) - 40; // °C
+  }
+
+  int getEngineLoad() {
+    return getValue("0104\r\n", 2) *100/255; // %
   }
   
-    int getSpeed() {
-    return getValue("010D\r\n", 2);
+  int getEngineOilTemp() {
+    // Result is temp + 40.
+    return getValue("015C\r\n", 2) - 40; // °C
   }
 
   int getValue(String command, int numberOfChars) {
