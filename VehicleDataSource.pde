@@ -14,19 +14,19 @@ class VehicleDataSource extends Thread {
       if (Thread.currentThread().isInterrupted()) {
         break;
       }
-      
+
       updateData();
       delay(100);
     }
   }
 
-    void updateData() {
-      if (!isUITest) {
-        data.add(vehicle.getRPM());
-        data.remove(0);
-      } else {
-        data.add((int)random(0, graph.maxValue));
-        data.remove(0);
-      }
+  void updateData() {
+    if (!isUITest) {
+      data.add(vehicle.getRPM());
+      data.remove(0);
+    } else {
+      data.add((int)random(0, graph.maxValue));
+      data.remove(0);
     }
   }
+}

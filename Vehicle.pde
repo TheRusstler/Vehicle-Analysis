@@ -10,15 +10,66 @@ class Vehicle {
     return Serial.list();
   }
 
-  // Reset takes 3 seconds.
   void reset() {
     channel.clear();
 
-    delay(1000);
+    delay(200);
     channel.write("ATZ\r\n");
-    delay(2000);
+    delay(1000);
+    
+    // Wait for idle prompt to appear.
+    readLine();
 
     channel.clear();
+  }
+
+  int getRPM() {
+    channel.clear();
+ 
+    String raw, line;
+    int rpm = 0;
+
+    channel.write("010C\r\n");
+    line = readLine();
+    
+    println(line);
+
+    // If car not ready.
+    if (line.contains("SEARCHING") || line.contains("STOPPED")) {
+      println("Error: " + line);
+      // Maybe reset here?
+      return 0;
+    }
+
+    // RPM is in the last 8 characters (currently in hex).
+    raw = line.substring(line.length() - 8);
+
+    // Clean out whitespace.
+    raw = raw.replaceAll("\\s+", "");
+
+    // Convert hex to int.
+    rpm = Integer.parseInt(raw, 16)/4;
+
+    println("RPM: " + rpm);
+
+    return rpm;
+  }
+
+  String readLine() {
+    String line = "";
+
+    while (channel.available() > 0) {
+      char in = channel.readChar();
+
+      // Read characters unitl new prompt
+      if (in != '>') {
+        line += in;
+      } else {
+        break;
+      }
+    }
+
+    return line;
   }
 
   void dispose() {
@@ -29,52 +80,5 @@ class Vehicle {
       println("Error stopping serial connection with vehicle:");
       println(e);
     }
-  }
-
-  int getRPM() {
-    int rpm = 0;
-
-    channel.clear();
-
-    delay(200);
-    channel.write("010C\r\n");
-    delay(600);
-
-    String raw, line = "";
-
-    while (channel.available() > 0) {
-      char in = channel.readChar();
-
-      // Read characters into result.
-      if (in != '>') {
-        line += in;
-      } 
-
-      // We have the full string.
-      else {
-        println(line);
-
-        // If car not ready.
-        if (line.contains("SEARCHING") || line.contains("STOPPED")) {
-          println("Car not ready. Engine off or reading too fast?");
-          channel.clear();
-          break;
-        }
-
-        // RPM is in the last 8 characters (currently in hex).
-        raw = line.substring(line.length() - 8);
-
-        // Clean out whitespace.
-        raw = raw.replaceAll("\\s+", "");
-
-        // Convert hex to int.
-        rpm = Integer.parseInt(raw, 16)/4;
-
-        println("RPM: " + rpm);
-        break;
-      }
-    }
-
-    return rpm;
   }
 }
