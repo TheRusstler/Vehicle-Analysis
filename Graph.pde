@@ -51,7 +51,7 @@ class Graph extends Scene { //<>//
     
     // Graph title
     fill(HORIZONTAL_LINE_COLOR);
-    textSize(150);
+    textSize(100);
     textAlign(CENTER, CENTER);
     text(title, width/2, height/2);
 

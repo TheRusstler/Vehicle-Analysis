@@ -18,8 +18,8 @@ PImage logo;
 String port = "/dev/tty.usbserial-AI02KH63";
 
 void setup() {
-  size(1000, 600);
-  //fullScreen();
+  //size(1400, 800);
+  fullScreen();
   applet = this;
 
   loadResources();
@@ -63,7 +63,7 @@ void loadGraph(int type) {
     graph = new Graph(COOLANT, "COOLANT (°C)", 250, 10);
     break;
     case(INTAKE_AIR):
-    graph = new Graph(COOLANT, "INTAKE AIR (°C)", 100, 10);
+    graph = new Graph(INTAKE_AIR, "INTAKE AIR (°C)", 100, 10);
     break;
     case(THROTTLE):
     graph = new Graph(THROTTLE, "THROTTLE %", 100, 10);

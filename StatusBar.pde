@@ -21,30 +21,23 @@ class StatusBar extends Scene {
     }
     , 14));
 
-    // Graph options.
-    buttons.add(new Button("SPEED", 
-      new Rectangle(width/2 - buttonWidth/2 - buttonWidth - 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
-      new Runnable() {
-      public void run() {
-        loadGraph(SPEED);
-      }
-    }
-    , 14));
+    addButton("SPEED", SPEED, 4*(-buttonWidth - 10));
+    addButton("RPM", RPM, 3*(-buttonWidth - 10));
+    addButton("COOLANT", COOLANT, 2*(-buttonWidth - 10));
+    addButton("AIR INTAKE", INTAKE_AIR, 1*(-buttonWidth - 10));
+    addButton("THROTTLE", THROTTLE, 0);
+    addButton("FUEL", FUEL, 1*(buttonWidth + 10));
+    addButton("AMBIENT AIR", AMBIENT_AIR, 2*(buttonWidth + 10));
+    addButton("ENGINE_LOAD", ENGINE_LOAD, 3*(buttonWidth + 10));
+    addButton("OIL TEMP", OIL_TEMP, 4*(buttonWidth + 10));
+  }
 
-    buttons.add(new Button("RPM", 
-      new Rectangle(width/2 - buttonWidth/2, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
+  void addButton(String name, final int type, int x) {
+    buttons.add(new Button(name, 
+      new Rectangle(width/2 - buttonWidth/2 + x, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
-        loadGraph(RPM);
-      }
-    }
-    , 14));
-
-    buttons.add(new Button("COOLANT", 
-      new Rectangle(width/2 - buttonWidth/2 + buttonWidth + 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
-      new Runnable() {
-      public void run() {
-        loadGraph(COOLANT);
+        loadGraph(type);
       }
     }
     , 14));
@@ -63,8 +56,8 @@ class StatusBar extends Scene {
     textSize(16);
     fill(255);
 
-    textAlign(RIGHT, CENTER);
-    text(port, width-20, HEIGHT/2);
+    //textAlign(RIGHT, CENTER);
+    //text(port, width-20, HEIGHT/2);
   }
 
   void onClick() {

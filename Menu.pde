@@ -18,7 +18,6 @@ public class Menu extends Scene {
           scene = new Graphs();
         }
         catch (Exception e) {
-          //println(e);
           warning = "Could not connect to port: " + port;
           println(warning);
         }

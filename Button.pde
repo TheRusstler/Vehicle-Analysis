@@ -33,7 +33,7 @@ class Button extends Scene {
     fill(255);
     textSize(fontSize);
     textAlign(CENTER, CENTER);
-    text(title, (float)rect.getCenterX()-2, (float)rect.getCenterY()-2);
+    text(title, (float)rect.getCenterX(), (float)rect.getCenterY()-2);
   }
 
   void onClick() {
