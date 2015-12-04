@@ -4,7 +4,7 @@ class Graphs extends Scene {
   ArrayList<Button> buttons = new ArrayList<Button>();
 
   public Graphs() {
-    loadGraph(RPM);
+    loadGraph(COOLANT);
   }
 
   void paint() {

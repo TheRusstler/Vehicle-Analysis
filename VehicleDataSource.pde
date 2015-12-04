@@ -8,16 +8,16 @@ class VehicleDataSource extends Thread {
     this.type = type;
   }
 
-  public void run() {
-    while (true) {
-      // If thread is interrupted, clean up!
-      if (Thread.currentThread().isInterrupted()) {
-        break;
-      }
+  private volatile boolean running = true;
 
+  public void run() {
+    while (running) {
       updateData();
-      delay(100);
     }
+  }
+
+  public void terminate() {
+    running = false;
   }
 
   void updateData() {
@@ -31,14 +31,15 @@ class VehicleDataSource extends Thread {
         case(SPEED):
         result = vehicle.getRPM(); // TODO: Change to the appropriate requests
         break;
-        case(OIL):
-        result = vehicle.getRPM();
+        case(COOLANT):
+        result = vehicle.getCoolant();
         break;
       }
 
       data.add(result);
       data.remove(0);
     } else {
+      delay(100);
       data.add((int)random(0, graph.maxValue));
       data.remove(0);
     }

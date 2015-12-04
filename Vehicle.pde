@@ -15,53 +15,64 @@ class Vehicle {
 
     delay(2000);
     channel.write("ATZ\r\n");
-    
+
     // Wait for the board to reset before sending commands.
     delay(2000);
-    
-    // Wait for idle prompt to appear.
-    readLine();
 
     channel.clear();
   }
 
   int getRPM() {
+    // Result is in quarters of rpm.
+    return getValue("010C\r\n", 8)/4;
+  }
+
+  int getCoolant() {
+    // Result is temp + 40.
+    return getValue("0105\r\n", 6) - 40;
+  }
+
+  int getValue(String command, int numberOfChars) {
     channel.clear();
- 
+
     String raw, line;
-    int rpm = 0;
+    int result = 0;
 
-    channel.write("010C\r\n");
-    line = readLine();
-    
-    println(line);
+    try {
+      channel.write(command);
+      line = readLine();
+      println("In: " + line);
 
-    // If car not ready.
-    if (line.contains("SEARCHING") || line.contains("STOPPED")) {
-      println("Error: " + line);
-      
-      // Maybe reset here?
-      
-      return 0;
+      // If an error response.
+      if (line.isEmpty() || 
+        line.contains("SEARCHING") || 
+        line.contains("STOPPED") || 
+        line.contains("NO DATA")) {
+        throw new Exception("Line: " + line);
+      }
+
+      raw = line.substring(line.length() - numberOfChars);
+
+      // Clean out whitespace.
+      raw = raw.replaceAll("\\s+", "");
+
+      // Convert hex to int.
+      result = Integer.parseInt(raw, 16);
+
+      println("Result: " + result);
+    }
+    catch(Exception e) {
+      println("Error: " + e);
+      exit();
     }
 
-    // RPM is in the last 8 characters (currently in hex).
-    raw = line.substring(line.length() - 8);
-
-    // Clean out whitespace.
-    raw = raw.replaceAll("\\s+", "");
-
-    // Convert hex to int.
-    rpm = Integer.parseInt(raw, 16)/4;
-
-    println("RPM: " + rpm);
-
-    return rpm;
+    return result;
   }
 
   String readLine() {
     String line = "";
 
+    delay(300);
     while (channel.available() > 0) {
       char in = channel.readChar();
 

@@ -40,11 +40,11 @@ class StatusBar extends Scene {
     }
     , 14));
 
-    buttons.add(new Button("OIL TEMP", 
+    buttons.add(new Button("COOLANT", 
       new Rectangle(width/2 - buttonWidth/2 + buttonWidth + 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
-        loadGraph(OIL);
+        loadGraph(COOLANT);
       }
     }
     , 14));

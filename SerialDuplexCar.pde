@@ -9,7 +9,7 @@ Scene scene;
 Vehicle vehicle;
 Graph graph;
 
-final int RPM = 0, SPEED = 1, OIL = 2;
+final int RPM = 0, SPEED = 1, COOLANT = 2;
 
 boolean isUITest = true;
 
@@ -39,20 +39,28 @@ void loadResources() {
 }
 
 void loadGraph(int type) {
-  // Clean up old thread.
+  
+  // Terminate old thread.
   if (graph != null) {
-    graph.dataSource.interrupt();
-  }
+    graph.dataSource.terminate();
 
+    try {
+      graph.dataSource.join();
+    }
+    catch(Exception e) {
+    }
+  }
+  
+  // Create new graph
   switch(type) {
     case(RPM):
-    graph = new Graph(RPM, "RPM", 1000, 5);
+    graph = new Graph(RPM, "RPM", 3000, 10);
     break;
     case(SPEED):
-    graph = new Graph(SPEED, "SPEED", 5000, 5);
+    graph = new Graph(SPEED, "SPEED (Km/h)", 100, 10);
     break;
-    case(OIL):
-    graph = new Graph(OIL, "OIL TEMP", 50, 10);
+    case(COOLANT):
+    graph = new Graph(COOLANT, "COOLANT (°C)", 250, 10);
     break;
   }
 }
