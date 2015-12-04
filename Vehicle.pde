@@ -1,4 +1,4 @@
-class Vehicle {
+class Vehicle { //<>//
 
   Serial channel;
 
@@ -24,12 +24,16 @@ class Vehicle {
 
   int getRPM() {
     // Result is in quarters of rpm.
-    return getValue("010C\r\n", 8)/4;
+    return getValue("010C\r\n", 4)/4;
   }
 
   int getCoolant() {
     // Result is temp + 40.
-    return getValue("0105\r\n", 6) - 40;
+    return getValue("0105\r\n", 2) - 40;
+  }
+  
+    int getSpeed() {
+    return getValue("010D\r\n", 2);
   }
 
   int getValue(String command, int numberOfChars) {
@@ -41,7 +45,6 @@ class Vehicle {
     try {
       channel.write(command);
       line = readLine();
-      println("In: " + line);
 
       // If an error response.
       if (line.isEmpty() || 
@@ -51,10 +54,16 @@ class Vehicle {
         throw new Exception("Line: " + line);
       }
 
+      // Clean out whitespace.
+      line = line.replaceAll("\\s+", "");
+
+      println("In: " + line);
+
       raw = line.substring(line.length() - numberOfChars);
 
-      // Clean out whitespace.
-      raw = raw.replaceAll("\\s+", "");
+      println("substring: " + raw);
+
+
 
       // Convert hex to int.
       result = Integer.parseInt(raw, 16);

@@ -15,7 +15,7 @@ class VehicleDataSource extends Thread {
       updateData();
     }
   }
-
+ 
   public void terminate() {
     running = false;
   }
@@ -29,7 +29,7 @@ class VehicleDataSource extends Thread {
         result = vehicle.getRPM();
         break;
         case(SPEED):
-        result = vehicle.getRPM(); // TODO: Change to the appropriate requests
+        result = vehicle.getSpeed();
         break;
         case(COOLANT):
         result = vehicle.getCoolant();
