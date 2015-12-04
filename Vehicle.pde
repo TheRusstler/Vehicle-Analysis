@@ -21,11 +21,21 @@ class Vehicle {
     channel.clear();
   }
 
+  void dispose() {
+    try {
+      channel.stop();
+    }
+    catch(Exception e) {
+      println("Error stopping serial connection with vehicle:");
+      println(e);
+    }
+  }
+
   int getRPM() {
     int rpm = 0;
 
     channel.clear();
-    
+
     delay(200);
     channel.write("010C\r\n");
     delay(600);
@@ -64,7 +74,7 @@ class Vehicle {
         break;
       }
     }
-    
+
     return rpm;
   }
 }

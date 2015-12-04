@@ -4,7 +4,7 @@ public class Menu extends Scene {
   String warning = "";
 
   int buttonWidth = 300, buttonHeight = 60;
-  
+
   public Menu() {
     buttons.add(new Button("CONNECT", 
       new Rectangle(width/2 - buttonWidth/2, height/2 -buttonHeight/2 +50, buttonWidth, buttonHeight), 
@@ -49,6 +49,7 @@ public class Menu extends Scene {
   }
 
   void drawLogo() {
+    imageMode(CENTER); 
     image(logo, width/2, height/2 - 100);
   }
 

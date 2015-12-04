@@ -1,40 +1,51 @@
-class Graph extends Scene { //<>// //<>//
-  final float max = 4000;
-  final int DATA_POINTS = 20;
+class Graph extends Scene { //<>//
 
-  int value = 0;
+  final int DATA_POINTS = 20;
+  final int BACKGROUND_COLOR = 25;
+  final int HORIZONTAL_LINE_COLOR = 35;
+
   int x = 0;
   int y = 45;
   int graph_width = width;
-  int graph_height = height - y; // 100px top, 100px bottom margin.
+  int graph_height = height - y;
+  float y_base = y + graph_height;       // Bottom of the graph
 
-  // Bottom of the graph
-  float y_base = y + graph_height;
-  
-  // Vertical scaling according to max value
-  float y_scale_factor = graph_height/max;
-
-  // DATA
-  //Integer[] data = new Integer[] { 1349, 1330, 1304, 1306, 1300, 1289, 1294, 1290, 1288, 1289, 1284, 1269, 1254, 1259, 1556, 1752, 2344, 2554, 2655, 2675, 2452, 2223, 2009, 1648, 1401, 1273, 1229, 1213, 1204 };
-
+  // Data
   ArrayList<Integer> dataPoints = new ArrayList<Integer>();
 
-  public Graph() {
+  String title;
+  float maxValue;
+  float y_scale_factor;
+
+  public Graph(String title, float maxValue) {
+    this.title = title;
+    this.maxValue = maxValue;
+    this.y_scale_factor = graph_height/maxValue;
+    initialiseData();
+  }
+
+  // Fills the data with zeros
+  void initialiseData() {
     Integer[] startData = new Integer[DATA_POINTS];
     Arrays.fill(startData, 0);
     Collections.addAll(dataPoints, startData);
   }
 
   void paint() {
-
     noStroke();
-    fill(40);
+    fill(BACKGROUND_COLOR);
     rectMode(CORNER);
     rect(x, y, graph_width, graph_height);
+    
+    // Graph title
+    fill(HORIZONTAL_LINE_COLOR);
+    textSize(150);
+    textAlign(CENTER, CENTER);
+    text(title, width/2, height/2);
 
     updateData();
-    lineGraph(dataPoints);
     drawLabels();
+    lineGraph(dataPoints);
   }
 
   void updateData() {
@@ -42,27 +53,35 @@ class Graph extends Scene { //<>// //<>//
       dataPoints.add(vehicle.getRPM());
       dataPoints.remove(0);
     } else if (frameCount % 30 == 0) {
-      dataPoints.add((int)random(0, max));
+      dataPoints.add((int)random(0, maxValue));
       dataPoints.remove(0);
     }
   }
 
   void drawLabels() {
     textSize(12);
-    
+
     // BOTTOM
     textAlign(LEFT, BOTTOM);
-    fill(255);
+    fill(150);
     text("0", 2, height);
 
     // TOP
     textAlign(LEFT, TOP);
-    text((int)max, 2, y);
+    text((int)maxValue, 2, y);
 
-    textAlign(LEFT, CENTER);
     // INTERMEDIATE
-    for (int i=1000; i<max; i+=1000) {
-      text(i, 2, y_base - i * y_scale_factor);
+    textAlign(LEFT, CENTER);
+    for (int i=1000; i<maxValue; i+=1000) {
+      float y_pos = y_base - i * y_scale_factor;
+
+      // Lines
+      stroke(HORIZONTAL_LINE_COLOR);
+      strokeWeight(1);
+      line(0, y_pos, width, y_pos);
+
+      // Label
+      text(i, 2, y_pos);
     }
   }
 
@@ -82,8 +101,6 @@ class Graph extends Scene { //<>// //<>//
       y2 = y_base - (values.get(i+1) * y_scale_factor);
 
       line(x1, y1, x2, y2);
-
-      //println("\n\nx1: " + x1 + "\ny1: " + y1, "\nx2: " + x2 + "\ny2: " + y2);
     }
   }
 

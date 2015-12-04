@@ -1,11 +1,10 @@
 class Graphs extends Scene {
 
   StatusBar statusBar = new StatusBar();
-  Graph graph;
   ArrayList<Button> buttons = new ArrayList<Button>();
 
   public Graphs() {
-    graph = new Graph();
+    graph = new Graph("RPM", 4000);
   }
 
   void paint() {

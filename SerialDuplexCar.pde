@@ -7,8 +7,9 @@ import processing.serial.*;
 PApplet applet;
 Scene scene;
 Vehicle vehicle;
+Graph graph;
 
-boolean isUITest = false;
+boolean isUITest = true;
 
 PImage logo;
 String port = "/dev/tty.usbserial-AI02KH63";
@@ -32,14 +33,5 @@ void mouseReleased() {
 }
 
 void loadResources() {
-  imageMode(CENTER); 
   logo = loadImage("resources/logo/logo_large_transparent.png");
-}
-
-void drawRPM(int value) {
-  background(0);
-  fill(255, 0, 0);
-  rectMode(CENTER);
-  float h = value/4;
-  rect(width/2, height-(h/2), 60, h);
 }

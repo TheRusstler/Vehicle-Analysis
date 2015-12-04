@@ -1,38 +1,75 @@
 class StatusBar extends Scene {
 
   final int HEIGHT = 45;
-  Button menu;
-  public StatusBar() {
+  final int buttonWidth = 100, buttonHeight = 30;
 
-    int buttonWidth = 100, buttonHeight = 30;
-    menu = new Button("Menu", 
+  ArrayList<Button> buttons = new ArrayList<Button>();
+
+  public StatusBar() {
+    buttons.add(new Button("Menu", 
       new Rectangle(5, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
       new Runnable() {
       public void run() {
+
+        // Detatch from vehicle
+        if (!isUITest) {
+          vehicle.dispose();
+        }
+
         scene = new Menu();
       }
-    }, 14);
+    }
+    , 14));
+
+    // Graph options.
+    buttons.add(new Button("SPEED", 
+      new Rectangle(width/2 - buttonWidth/2 - buttonWidth - 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
+      new Runnable() {
+      public void run() {
+        graph = new Graph("SPEED", 4000);
+      }
+    }
+    , 14));
+
+    buttons.add(new Button("RPM", 
+      new Rectangle(width/2 - buttonWidth/2, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
+      new Runnable() {
+      public void run() {
+        graph = new Graph("RPM", 4000);
+      }
+    }
+    , 14));
+
+    buttons.add(new Button("OIL TEMP", 
+      new Rectangle(width/2 - buttonWidth/2 + buttonWidth + 10, HEIGHT/2 - buttonHeight/2, buttonWidth, buttonHeight), 
+      new Runnable() {
+      public void run() {
+        graph = new Graph("OIL TEMP", 4000);
+      }
+    }
+    , 14));
   }
 
   void paint() {
     noStroke();
     fill(0);
     rect(0, 0, width, HEIGHT);
-    
-    menu.paint();
-    
+
+    for (Button b : buttons) {
+      b.paint();
+    }
+
     textAlign(CENTER, CENTER);
     textSize(16);
     fill(255);
-    
-    //text(String.format("%s POINTS", game.points), width/4, 10);
-    //text(String.format("CAPTAIN %s", game.player), width/2, 10);
-    //text(game.health + "% HEALTH", width * 3/4, 10);
-    text(String.format("PORT %s", port), width/2, HEIGHT/2);
+
+    textAlign(RIGHT, CENTER);
+    text(port, width-20, HEIGHT/2);
   }
 
-
   void onClick() {
-    menu.onClick();
+    for (Button b : buttons) {
+      b.onClick();
+    }
   }
 }
