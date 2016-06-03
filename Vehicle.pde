@@ -45,22 +45,8 @@ class Vehicle { //<>//
     return getValue("0111\r\n", 2) *100/255; // %
   }
 
-  int getFuelLevel() {
-    return getValue("012F\r\n", 2) *100/255; // %
-  }
-
-  int getAmbientAirTemp() {
-    // Result is temp + 40.
-    return getValue("0146\r\n", 2) - 40; // °C
-  }
-
   int getEngineLoad() {
     return getValue("0104\r\n", 2) *100/255; // %
-  }
-  
-  int getEngineOilTemp() {
-    // Result is temp + 40.
-    return getValue("015C\r\n", 2) - 40; // °C
   }
 
   int getValue(String command, int numberOfChars) {

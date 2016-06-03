@@ -40,17 +40,8 @@ class VehicleDataSource extends Thread {
         case(THROTTLE):
         result = vehicle.getThrottlePosition();
         break;
-        case(FUEL):
-        result = vehicle.getFuelLevel();
-        break;
-        case(AMBIENT_AIR):
-        result = vehicle.getAmbientAirTemp();
-        break;
         case(ENGINE_LOAD):
         result = vehicle.getEngineLoad();
-        break;
-        case(OIL_TEMP):
-        result = vehicle.getEngineOilTemp();
         break;
       }
 
